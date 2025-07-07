@@ -3,6 +3,7 @@ return {
     "neovim/nvim-lspconfig",
     dependencies = {
       "folke/lazydev.nvim",
+      "b0o/schemastore.nvim",
       ft = "lua",
       opts = {
         library = {
@@ -15,6 +16,9 @@ return {
       
       -- Lua LSP
       lspconfig.lua_ls.setup {}
+      
+      -- Get nvim-cmp capabilities
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
       
       -- Common LSP keymaps function
       local function setup_keymaps(client, bufnr)
@@ -44,7 +48,7 @@ return {
       -- TypeScript/JavaScript LSP (disabled for Deno projects)
       lspconfig.ts_ls.setup({
         on_attach = setup_keymaps,
-        capabilities = vim.lsp.protocol.make_client_capabilities(),
+        capabilities = capabilities,
         root_dir = function(fname)
           local root = lspconfig.util.root_pattern("deno.json", "deno.jsonc")(fname)
           if root then
@@ -58,7 +62,7 @@ return {
       -- Deno LSP
       lspconfig.denols.setup({
         on_attach = setup_keymaps,
-        capabilities = vim.lsp.protocol.make_client_capabilities(),
+        capabilities = capabilities,
         root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
         init_options = {
           lint = true,
@@ -95,27 +99,43 @@ return {
       -- Ruby LSP
       lspconfig.ruby_lsp.setup({
         on_attach = setup_keymaps,
-        capabilities = vim.lsp.protocol.make_client_capabilities(),
+        capabilities = capabilities,
       })
       
       -- HTML LSP
       lspconfig.html.setup({
-        on_attach = setup_keymaps,
-        capabilities = vim.lsp.protocol.make_client_capabilities(),
+        on_attach = function(client, bufnr)
+          client.server_capabilities.documentFormattingProvider = false
+          setup_keymaps(client, bufnr)
+        end,
+        capabilities = capabilities,
         filetypes = { "html", "erb", "eruby" },
       })
       
       -- CSS LSP
       lspconfig.cssls.setup({
         on_attach = setup_keymaps,
-        capabilities = vim.lsp.protocol.make_client_capabilities(),
+        capabilities = capabilities,
       })
       
       -- Emmet LSP (HTML abbreviations)
       lspconfig.emmet_ls.setup({
         on_attach = setup_keymaps,
-        capabilities = vim.lsp.protocol.make_client_capabilities(),
+        capabilities = capabilities,
         filetypes = { "html", "css", "erb", "eruby" },
+      })
+      
+      -- JSON LSP
+      lspconfig.jsonls.setup({
+        on_attach = setup_keymaps,
+        capabilities = capabilities,
+        settings = {
+          json = {
+            schemas = require('schemastore').json.schemas(),
+            validate = { enable = true },
+            format = { enable = true },
+          },
+        },
       })
     end
   }
