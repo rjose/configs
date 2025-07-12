@@ -9,8 +9,8 @@ vim.keymap.set("n", "<Esc>", "<cmd>noh<CR>")
 
 vim.opt.clipboard = "unnamedplus"
 
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 
 vim.opt.number = true
@@ -57,6 +57,14 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = { "eruby", "erb" },
   callback = function()
     vim.opt_local.foldmethod = "indent"
+  end,
+})
+
+-- Configure quickfix to open on the left side
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "qf",
+  callback = function()
+    vim.cmd("wincmd H")
   end,
 })
 

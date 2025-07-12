@@ -15,7 +15,7 @@ return {
       local luasnip = require("luasnip")
       
       -- Toggle autocomplete functionality
-      local autocomplete_enabled = true
+      local autocomplete_enabled = false
       
       local function toggle_autocomplete()
         autocomplete_enabled = not autocomplete_enabled
@@ -32,6 +32,7 @@ return {
       vim.keymap.set("n", "<leader>tc", toggle_autocomplete, { desc = "Toggle autocomplete" })
 
       cmp.setup({
+        enabled = false, -- Disable by default
         snippet = {
           expand = function(args)
             luasnip.lsp_expand(args.body)
@@ -44,7 +45,9 @@ return {
           ["<C-e>"] = cmp.mapping.abort(),
           ["<CR>"] = cmp.mapping.confirm({ select = true }),
           ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
+            if not cmp.visible() then
+              cmp.complete()
+            elseif cmp.visible() then
               cmp.select_next_item()
             elseif luasnip.expand_or_jumpable() then
               luasnip.expand_or_jump()
