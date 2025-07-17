@@ -17,7 +17,7 @@ return {
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = function()
       require("render-markdown").setup({
-        enabled = true,
+        enabled = false,
         max_file_size = 1.5,
         debounce = 100,
         render_modes = { 'n', 'c' },

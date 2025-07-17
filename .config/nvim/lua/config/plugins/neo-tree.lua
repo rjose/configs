@@ -183,8 +183,9 @@ return {
     })
 
     -- Key mappings
-    vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { desc = "Toggle Neo-tree" })
+    vim.keymap.set("n", "<leader>nt", ":Neotree toggle<CR>", { desc = "Toggle Neo-tree" })
     vim.keymap.set("n", "<leader>bf", ":Neotree buffers reveal float<CR>", { desc = "Neo-tree buffers" })
     vim.keymap.set("n", "<leader>gs", ":Neotree git_status<CR>", { desc = "Neo-tree git status" })
   end,
 }
+

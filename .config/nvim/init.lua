@@ -7,6 +7,9 @@ vim.keymap.set("v", "<space>x", ":lua<CR>")
 -- Clear search highlights with ESC
 vim.keymap.set("n", "<Esc>", "<cmd>noh<CR>")
 
+-- Edit file in current directory
+vim.keymap.set("n", "<leader>e", ":e %:h/", { desc = "Edit file in current directory" })
+
 vim.opt.clipboard = "unnamedplus"
 
 vim.opt.tabstop = 2
