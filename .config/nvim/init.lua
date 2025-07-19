@@ -193,3 +193,6 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.foldmethod = "syntax"
   end,
 })
+
+-- Save file and go to normal mode
+vim.keymap.set({'n', 'i', 'v'}, '<C-s>', '<Esc>:w<CR>', { desc = 'Save file and go to normal mode' })
