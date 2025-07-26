@@ -196,3 +196,11 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Save file and go to normal mode
 vim.keymap.set({'n', 'i', 'v'}, '<C-s>', '<Esc>:w<CR>', { desc = 'Save file and go to normal mode' })
+
+-- Scratch buffer command
+vim.api.nvim_create_user_command('Scratch', function()
+  vim.cmd('enew')
+  vim.bo.buftype = 'nofile'
+  vim.bo.bufhidden = 'wipe'
+  vim.bo.swapfile = false
+end, { desc = 'Create a scratch buffer that can be closed without saving' })
