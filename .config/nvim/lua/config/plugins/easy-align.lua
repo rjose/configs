@@ -17,4 +17,3 @@ return {
     vim.keymap.set({ "n", "x" }, "gA", "<Plug>(EasyAlign)", { desc = "Easy align (interactive)" })
   end,
 }
-

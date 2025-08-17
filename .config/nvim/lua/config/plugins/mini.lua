@@ -43,20 +43,23 @@ return {
             local search = statusline.section_searchcount({ trunc_width = 75 })
 
             return statusline.combine_groups({
-              { hl = mode_hl,                 strings = { mode } },
-              { hl = 'MiniStatuslineDevinfo', strings = { git } },
-              '%<', -- Mark general truncate point
+              { hl = mode_hl, strings = { mode } },
+              { hl = 'MiniStatuslineDevinfo', strings = { git, diagnostics, lsp } },
+              '%<',
               { hl = 'MiniStatuslineFilename', strings = { filename } },
-              '%=', -- Right align
-              -- { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
-              { hl = mode_hl,                  strings = { location } },
+              '%=',
+              { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
+              { hl = mode_hl, strings = { search, location } },
             })
           end,
           inactive = function()
-            return '%#MiniStatuslineInactive#%F%='
-          end
-        }
+            local filename = statusline.section_filename({ trunc_width = 140 })
+            return statusline.combine_groups({
+              { hl = 'MiniStatuslineInactive', strings = { filename } },
+            })
+          end,
+        },
       }
-    end
-  }
+    end,
+  },
 }

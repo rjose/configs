@@ -75,8 +75,8 @@ return {
             })
 
             -- Setup virtual text
-            require('nvim-dap-virtual-text').setup({
-                enabled = false,
+            require("nvim-dap-virtual-text").setup({
+                enabled = true,
                 enabled_commands = true,
                 highlight_changed_variables = true,
                 highlight_new_as_changed = false,
@@ -84,36 +84,45 @@ return {
                 commented = false,
                 only_first_definition = true,
                 all_references = false,
-                clear_on_continue = false,
-                display_callback = function(variable, buf, stackframe, node, options)
-                    if options.virt_text_pos == 'inline' then
-                        return ' = ' .. variable.value
-                    else
-                        return variable.name .. ' = ' .. variable.value
-                    end
-                end,
+                filter_references_pattern = '<module',
+                virt_text_pos = 'eol',
+                all_frames = false,
+                virt_lines = false,
+                virt_text_win_col = nil
             })
 
-            -- Setup Ruby DAP
-            require('dap-ruby').setup()
-            
-            -- Additional Rails-specific configuration
-            dap.configurations.ruby = vim.list_extend(dap.configurations.ruby or {}, {
+            -- Ruby DAP configuration
+            dap.adapters.ruby = function(callback, config)
+                callback {
+                    type = "server",
+                    host = "127.0.0.1",
+                    port = "${port}",
+                    executable = {
+                        command = "bundle",
+                        args = { "exec", "rdbg", "-n", "--open", "--port", "${port}",
+                               "-c", "--", "ruby", config.program }
+                    }
+                }
+            end
+
+            dap.configurations.ruby = {
                 {
-                    type = 'ruby',
-                    name = 'Attach to Rails (port 38698)',
-                    request = 'attach',
-                    host = '127.0.0.1',
-                    port = 38698,
+                    type = "ruby",
+                    name = "debug current file",
+                    request = "attach",
                     localfs = true,
-                    cwd = '${workspaceFolder}',
+                    program = "${file}",
                 },
-            })
+                {
+                    type = "ruby",
+                    name = "run current spec file",
+                    request = "attach",
+                    localfs = true,
+                    program = "bundle exec rspec ${file}",
+                },
+            }
 
-            -- Copy Ruby configuration for ERB files
-            dap.configurations.eruby = dap.configurations.ruby
-
-            -- Auto open/close dap-ui
+            -- Automatically open/close UI
             dap.listeners.after.event_initialized["dapui_config"] = function()
                 dapui.open()
             end
@@ -125,17 +134,29 @@ return {
             end
 
             -- Key mappings
-            vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
-            vim.keymap.set('n', '<F1>', dap.step_into, { desc = 'Debug: Step Into' })
-            vim.keymap.set('n', '<F2>', dap.step_over, { desc = 'Debug: Step Over' })
-            vim.keymap.set('n', '<F3>', dap.step_out, { desc = 'Debug: Step Out' })
-            vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
-            vim.keymap.set('n', '<leader>B', function()
-                dap.set_breakpoint(vim.fn.input('Breakpoint condition: '))
-            end, { desc = 'Debug: Set Conditional Breakpoint' })
-            vim.keymap.set('n', '<F7>', dapui.toggle, { desc = 'Debug: Toggle UI' })
-            vim.keymap.set('n', '<leader>dr', dap.repl.open, { desc = 'Debug: Open REPL' })
-            vim.keymap.set('n', '<leader>dl', dap.run_last, { desc = 'Debug: Run Last' })
+            vim.keymap.set('n', '<F5>', function() dap.continue() end, { desc = 'Debug continue' })
+            vim.keymap.set('n', '<F10>', function() dap.step_over() end, { desc = 'Debug step over' })
+            vim.keymap.set('n', '<F11>', function() dap.step_into() end, { desc = 'Debug step into' })
+            vim.keymap.set('n', '<F12>', function() dap.step_out() end, { desc = 'Debug step out' })
+            vim.keymap.set('n', '<Leader>b', function() dap.toggle_breakpoint() end, { desc = 'Toggle breakpoint' })
+            vim.keymap.set('n', '<Leader>B', function() dap.set_breakpoint() end, { desc = 'Set breakpoint' })
+            vim.keymap.set('n', '<Leader>lp', function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end, { desc = 'Set log point' })
+            vim.keymap.set('n', '<Leader>dr', function() dap.repl.open() end, { desc = 'Debug REPL' })
+            vim.keymap.set('n', '<Leader>dl', function() dap.run_last() end, { desc = 'Debug run last' })
+            vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
+                require('dap.ui.widgets').hover()
+            end, { desc = 'Debug hover' })
+            vim.keymap.set({'n', 'v'}, '<Leader>dp', function()
+                require('dap.ui.widgets').preview()
+            end, { desc = 'Debug preview' })
+            vim.keymap.set('n', '<Leader>df', function()
+                local widgets = require('dap.ui.widgets')
+                widgets.centered_float(widgets.frames)
+            end, { desc = 'Debug frames' })
+            vim.keymap.set('n', '<Leader>ds', function()
+                local widgets = require('dap.ui.widgets')
+                widgets.centered_float(widgets.scopes)
+            end, { desc = 'Debug scopes' })
         end,
     },
 }

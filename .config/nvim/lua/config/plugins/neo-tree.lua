@@ -12,6 +12,7 @@ return {
       popup_border_style = "rounded",
       enable_git_status = true,
       enable_diagnostics = true,
+      sort_case_insensitive = false,
       default_component_configs = {
         container = {
           enable_character_fade = true
@@ -31,7 +32,7 @@ return {
         icon = {
           folder_closed = "",
           folder_open = "",
-          folder_empty = "ﰊ",
+          folder_empty = "󰜌",
           default = "*",
           highlight = "NeoTreeFileIcon"
         },
@@ -46,15 +47,15 @@ return {
         },
         git_status = {
           symbols = {
-            added = "",
-            modified = "",
-            deleted = "✖",
-            renamed = "",
+            added     = "✚",
+            modified  = "",
+            deleted   = "✖",
+            renamed   = "󰁕",
             untracked = "",
-            ignored = "",
-            unstaged = "",
-            staged = "",
-            conflict = "",
+            ignored   = "",
+            unstaged  = "󰄱",
+            staged    = "",
+            conflict  = "",
           }
         },
       },
@@ -72,8 +73,8 @@ return {
           },
           ["<2-LeftMouse>"] = "open",
           ["<cr>"] = "open",
-          ["<esc>"] = "revert_preview",
-          ["P"] = { "toggle_preview", config = { use_float = true } },
+          ["<esc>"] = "cancel",
+          ["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
           ["l"] = "focus_preview",
           ["S"] = "open_split",
           ["s"] = "open_vsplit",
@@ -100,6 +101,7 @@ return {
           ["?"] = "show_help",
           ["<"] = "prev_source",
           [">"] = "next_source",
+          ["i"] = "show_file_details",
         }
       },
       nesting_rules = {},
@@ -110,20 +112,18 @@ return {
           hide_gitignored = true,
           hide_hidden = true,
           hide_by_name = {
-            ".DS_Store",
-            "thumbs.db"
+            "node_modules"
           },
           hide_by_pattern = {
             "*.meta",
             "*/src/*/tsconfig.json",
           },
           always_show = {
-            ".gitignore"
+            ".gitignored",
           },
           never_show = {
-            ".git",
-            ".svn",
-            "node_modules"
+            ".DS_Store",
+            "thumbs.db"
           },
           never_show_by_pattern = {
             ".null-ls_*",
@@ -148,8 +148,23 @@ return {
             ["<c-x>"] = "clear_filter",
             ["[g"] = "prev_git_modified",
             ["]g"] = "next_git_modified",
-          }
-        }
+            ["o"] = { "show_help", nowait=false, config = { title = "Order by", prefix_key = "o" } },
+            ["oc"] = { "order_by_created", nowait = false },
+            ["od"] = { "order_by_diagnostics", nowait = false },
+            ["og"] = { "order_by_git_status", nowait = false },
+            ["om"] = { "order_by_modified", nowait = false },
+            ["on"] = { "order_by_name", nowait = false },
+            ["os"] = { "order_by_size", nowait = false },
+            ["ot"] = { "order_by_type", nowait = false },
+          },
+          fuzzy_finder_mappings = {
+            ["<down>"] = "move_cursor_down",
+            ["<C-n>"] = "move_cursor_down",
+            ["<up>"] = "move_cursor_up",
+            ["<C-p>"] = "move_cursor_up",
+          },
+        },
+        commands = {}
       },
       buffers = {
         follow_current_file = {
@@ -163,6 +178,13 @@ return {
             ["bd"] = "buffer_delete",
             ["<bs>"] = "navigate_up",
             ["."] = "set_root",
+            ["o"] = { "show_help", nowait=false, config = { title = "Order by", prefix_key = "o" } },
+            ["oc"] = { "order_by_created", nowait = false },
+            ["od"] = { "order_by_diagnostics", nowait = false },
+            ["om"] = { "order_by_modified", nowait = false },
+            ["on"] = { "order_by_name", nowait = false },
+            ["os"] = { "order_by_size", nowait = false },
+            ["ot"] = { "order_by_type", nowait = false },
           }
         },
       },
@@ -170,22 +192,28 @@ return {
         window = {
           position = "float",
           mappings = {
-            ["A"] = "git_add_all",
+            ["A"]  = "git_add_all",
             ["gu"] = "git_unstage_file",
             ["ga"] = "git_add_file",
             ["gr"] = "git_revert_file",
             ["gc"] = "git_commit",
             ["gp"] = "git_push",
             ["gg"] = "git_commit_and_push",
+            ["o"] = { "show_help", nowait=false, config = { title = "Order by", prefix_key = "o" } },
+            ["oc"] = { "order_by_created", nowait = false },
+            ["od"] = { "order_by_diagnostics", nowait = false },
+            ["om"] = { "order_by_modified", nowait = false },
+            ["on"] = { "order_by_name", nowait = false },
+            ["os"] = { "order_by_size", nowait = false },
+            ["ot"] = { "order_by_type", nowait = false },
           }
         }
       }
     })
 
-    -- Key mappings
+    -- Key mappings for Neo-tree
     vim.keymap.set("n", "<leader>nt", ":Neotree toggle<CR>", { desc = "Toggle Neo-tree" })
     vim.keymap.set("n", "<leader>bf", ":Neotree buffers reveal float<CR>", { desc = "Neo-tree buffers" })
     vim.keymap.set("n", "<leader>gs", ":Neotree git_status<CR>", { desc = "Neo-tree git status" })
   end,
 }
-

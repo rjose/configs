@@ -83,8 +83,8 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     vim.api.nvim_set_hl(0, "Folded", { bg = "#1e1e2e", fg = "#89b4fa", italic = true })
     vim.api.nvim_set_hl(0, "FoldColumn", { bg = "NONE", fg = "#6c7086" })
 
-    -- Subtle current line highlight
-    vim.api.nvim_set_hl(0, "CursorLine", { bg = "#262638" })
+    -- Subtle current line highlight (commented out for light theme)
+    -- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#262638" })
 
     -- Make window borders more visible
     vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#89b4fa", bold = true })
@@ -98,40 +98,40 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     vim.api.nvim_set_hl(0, "MiniStatuslineFileinfo", { bg = "#89b4fa", fg = "#1e1e2e" })
     vim.api.nvim_set_hl(0, "StatusLine", { bg = "#89b4fa", fg = "#1e1e2e" })
 
-    -- Harmonizing current line highlight
-    vim.api.nvim_set_hl(0, "CursorLine", { bg = "#3a3a2e" })
+    -- Harmonizing current line highlight (commented out for light theme)
+    -- -- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#3a3a2e" })
   end,
 })
 
--- Apply immediately
-vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#2d4a2c", fg = "#a6e3a1" })
-vim.api.nvim_set_hl(0, "DiffChange", { bg = "#3a3a2e", fg = "#f9e2af" })
-vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#4a2d2d", fg = "#f38ba8" })
-vim.api.nvim_set_hl(0, "DiffText", { bg = "#4a4a2e", fg = "#f9e2af" })
+-- Apply immediately (commented out for light theme)
+-- vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#2d4a2c", fg = "#a6e3a1" })
+-- vim.api.nvim_set_hl(0, "DiffChange", { bg = "#3a3a2e", fg = "#f9e2af" })
+-- vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#4a2d2d", fg = "#f38ba8" })
+-- vim.api.nvim_set_hl(0, "DiffText", { bg = "#4a4a2e", fg = "#f9e2af" })
 
--- Apply fold highlighting immediately
-vim.api.nvim_set_hl(0, "Folded", { bg = "#1e1e2e", fg = "#89b4fa", italic = true })
-vim.api.nvim_set_hl(0, "FoldColumn", { bg = "NONE", fg = "#6c7086" })
+-- Apply fold highlighting immediately (commented out for light theme)
+-- vim.api.nvim_set_hl(0, "Folded", { bg = "#1e1e2e", fg = "#89b4fa", italic = true })
+-- vim.api.nvim_set_hl(0, "FoldColumn", { bg = "NONE", fg = "#6c7086" })
 
--- Apply current line highlight immediately
-vim.api.nvim_set_hl(0, "CursorLine", { bg = "#313244" })
+-- Apply current line highlight immediately (commented out for light theme)
+-- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#313244" })
 
--- Tmux focus-responsive background dimming
-vim.api.nvim_create_augroup("TmuxFocusBackground", { clear = true })
-vim.api.nvim_create_autocmd({ "FocusGained", "VimEnter" }, {
-  group = "TmuxFocusBackground",
-  callback = function()
-    -- Active: use dark charcoal background (matches your preferred color)
-    vim.api.nvim_set_hl(0, "Normal", { bg = "#1a1a1a" })
-  end,
-})
-vim.api.nvim_create_autocmd({ "FocusLost" }, {
-  group = "TmuxFocusBackground",
-  callback = function()
-    -- Inactive: use dimmed background (matches tmux inactive pane)
-    vim.api.nvim_set_hl(0, "Normal", { bg = "#303030" })
-  end,
-})
+-- Tmux focus-responsive background dimming (commented out for light theme)
+-- vim.api.nvim_create_augroup("TmuxFocusBackground", { clear = true })
+-- vim.api.nvim_create_autocmd({ "FocusGained", "VimEnter" }, {
+--   group = "TmuxFocusBackground",
+--   callback = function()
+--     -- Active: use dark charcoal background (matches your preferred color)
+--     vim.api.nvim_set_hl(0, "Normal", { bg = "#1a1a1a" })
+--   end,
+-- })
+-- vim.api.nvim_create_autocmd({ "FocusLost" }, {
+--   group = "TmuxFocusBackground",
+--   callback = function()
+--     -- Inactive: use dimmed background (matches tmux inactive pane)
+--     vim.api.nvim_set_hl(0, "Normal", { bg = "#303030" })
+--   end,
+-- })
 
 -- Only show cursor line in active window
 vim.api.nvim_create_augroup("CursorLineOnlyInActiveWindow", { clear = true })
@@ -158,7 +158,7 @@ vim.api.nvim_set_hl(0, "MiniStatuslineDevinfo", { bg = "#89b4fa", fg = "#1e1e2e"
 vim.api.nvim_set_hl(0, "MiniStatuslineFilename", { bg = "#89b4fa", fg = "#1e1e2e" })
 vim.api.nvim_set_hl(0, "MiniStatuslineFileinfo", { bg = "#89b4fa", fg = "#1e1e2e" })
 vim.api.nvim_set_hl(0, "StatusLine", { bg = "#89b4fa", fg = "#1e1e2e" })
-vim.api.nvim_set_hl(0, "CursorLine", { bg = "#3a3a2e" })
+-- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#3a3a2e" })
 
 -- Custom fold text function for better fold display
 vim.opt.fillchars = {

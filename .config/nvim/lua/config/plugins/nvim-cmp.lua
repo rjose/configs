@@ -45,9 +45,7 @@ return {
           ["<C-e>"] = cmp.mapping.abort(),
           ["<CR>"] = cmp.mapping.confirm({ select = true }),
           ["<Tab>"] = cmp.mapping(function(fallback)
-            if not cmp.visible() then
-              cmp.complete()
-            elseif cmp.visible() then
+            if cmp.visible() then
               cmp.select_next_item()
             elseif luasnip.expand_or_jumpable() then
               luasnip.expand_or_jump()
@@ -70,11 +68,17 @@ return {
           { name = "luasnip" },
         }, {
           { name = "buffer" },
-          { name = "path" },
-        }),
+        })
       })
 
-      -- Use buffer source for `/` and `?`
+      -- Set configuration for specific filetype.
+      cmp.setup.filetype("gitcommit", {
+        sources = cmp.config.sources({
+          { name = "buffer" },
+        })
+      })
+
+      -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline({ "/", "?" }, {
         mapping = cmp.mapping.preset.cmdline(),
         sources = {
@@ -82,7 +86,7 @@ return {
         }
       })
 
-      -- Use cmdline & path source for ':'
+      -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline(":", {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({

@@ -1,0 +1,7 @@
+core.pager=delta
+interactive.difffilter=delta --color-only
+delta.navigate=true
+delta.light=true
+delta.side-by-side=true
+delta.line-numbers=true
+delta.syntax-theme=GitHub

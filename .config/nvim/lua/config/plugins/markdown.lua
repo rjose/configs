@@ -17,26 +17,19 @@ return {
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = function()
       require("render-markdown").setup({
-        enabled = false,
-        max_file_size = 1.5,
-        debounce = 100,
-        render_modes = { 'n', 'c' },
-        anti_conceal = {
-          enabled = true,
-          above = 0,
-          below = 0,
-        },
         heading = {
           enabled = true,
           sign = true,
+          position = 'overlay',
           icons = { '󰲡 ', '󰲣 ', '󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
+          signs = { '󰫎 ' },
           width = 'full',
-          left_margin = 0,
           left_pad = 0,
           right_pad = 0,
           min_width = 0,
           border = false,
           border_virtual = false,
+          border_prefix = false,
           above = '▄',
           below = '▀',
           backgrounds = {
@@ -60,13 +53,16 @@ return {
           enabled = true,
           sign = true,
           style = 'full',
-          left_margin = 0,
+          position = 'left',
+          language_pad = 0,
+          disable_background = { 'diff' },
+          width = 'full',
           left_pad = 0,
           right_pad = 0,
-          width = 'full',
+          min_width = 0,
           border = 'thin',
-          above = '',
-          below = '',
+          above = '▄',
+          below = '▀',
           highlight = 'RenderMarkdownCode',
           highlight_inline = 'RenderMarkdownCodeInline',
         },
@@ -94,7 +90,7 @@ return {
             highlight = 'RenderMarkdownChecked',
           },
           custom = {
-            todo = { raw = '[>]', rendered = '󰥔 ', highlight = 'RenderMarkdownTodo' },
+            todo = { raw = '[-]', rendered = '󰥔 ', highlight = 'RenderMarkdownTodo' },
           },
         },
         quote = {
@@ -105,8 +101,10 @@ return {
         },
         pipe_table = {
           enabled = true,
+          preset = 'none',
           style = 'full',
           cell = 'padded',
+          padding = 1,
           min_width = 0,
           border = {
             '┌', '┬', '┐',
@@ -155,7 +153,7 @@ return {
           hyperlink = '󰌹 ',
           highlight = 'RenderMarkdownLink',
           custom = {
-            web = { pattern = '^http[s]?://', icon = '󰖟 ' },
+            web = { pattern = '^http[s]?://', icon = '󰖟 ', highlight = 'RenderMarkdownLink' },
           },
         },
         sign = {

@@ -1,0 +1,121 @@
+git:
+  paging:
+    colorArg: always
+    pager: delta --light --paging=never --syntax-theme=GitHub
+  log:
+    showGraph: 'always'
+gui:
+  # Light theme configuration
+  theme:
+    lightTheme: true
+    activeBorderColor:
+      - '#8839ef' # Catppuccin purple
+      - bold
+    inactiveBorderColor:
+      - '#6c6f85' # Catppuccin subtext
+    optionsTextColor:
+      - '#04a5e5' # Catppuccin blue
+    selectedLineBgColor:
+      - '#ccd0da' # Darker surface for better visibility
+    selectedRangeBgColor:
+      - '#bcc0cc' # Even darker for range selection
+    cherryPickedCommitBgColor:
+      - '#fe640b' # Catppuccin peach
+    cherryPickedCommitFgColor:
+      - '#eff1f5' # Catppuccin base
+    unstagedChangesColor:
+      - '#d20f39' # Catppuccin red
+    defaultFgColor:
+      - '#4c4f69' # Catppuccin text
+  mouseEvents: true
+  skipDiscardChangeWarning: false
+  skipStashWarning: false
+# Custom delta configuration for lazygit
+pager:
+  diff: "delta --light --paging=never --line-numbers --side-by-side --syntax-theme=GitHub"
+  log: "delta --light --paging=never --line-numbers --syntax-theme=GitHub"
+# Key bindings
+keybinding:
+  universal:
+    quit: 'q'
+    quit-alt1: '<c-c>'
+    return: '<esc>'
+    quitWithoutChangingDirectory: 'Q'
+    togglePanel: '<tab>'
+    prevItem: '<up>'
+    nextItem: '<down>'
+    prevItem-alt: 'k'
+    nextItem-alt: 'j'
+    prevPage: ','
+    nextPage: '.'
+    gotoTop: '<'
+    gotoBottom: '>'
+    scrollLeft: 'H'
+    scrollRight: 'L'
+    prevBlock: '<left>'
+    nextBlock: '<right>'
+    prevBlock-alt: 'h'
+    nextBlock-alt: 'l'
+    jumpToBlock:
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      - '5'
+    nextMatch: 'n'
+    prevMatch: 'N'
+    optionMenu: 'x'
+    optionMenu-alt1: '?'
+    select: '<space>'
+    goInto: '<enter>'
+    openRecentRepos: '<c-r>'
+    confirm: '<enter>'
+    confirm-alt1: 'y'
+    remove: 'd'
+    new: 'n'
+    edit: 'e'
+    openFile: 'o'
+    scrollUpMain: '<pgup>'
+    scrollDownMain: '<pgdown>'
+    scrollUpMain-alt1: 'K'
+    scrollDownMain-alt1: 'J'
+    scrollUpMain-alt2: '<c-u>'
+    scrollDownMain-alt2: '<c-d>'
+    executeShellCommand: ':'
+    createRebaseOptionsMenu: 'm'
+    pushFiles: 'P'
+    pullFiles: 'p'
+    refresh: 'R'
+    createPatchOptionsMenu: '<c-p>'
+    nextTab: ']'
+    prevTab: '['
+    nextScreenMode: '+'
+    prevScreenMode: '_'
+    undo: 'z'
+    redo: '<c-z>'
+    filteringMenu: '<c-s>'
+    diffingMenu: 'W'
+    diffingMenu-alt: '<c-e>'
+    copyToClipboard: '<c-o>'
+    submitEditorText: '<enter>'
+    appendNewline: '<a-enter>'
+    extrasMenu: '@'
+    toggleWhitespaceInDiffView: '<c-w>'
+    increaseContextInDiffView: '}'
+    decreaseContextInDiffView: '{'
+  status:
+    checkForUpdate: 'u'
+    recentRepos: '<enter>'
+  files:
+    commitChanges: 'c'
+    commitChangesWithoutHook: 'w'
+    amendLastCommit: 'A'
+    commitChangesWithEditor: 'C'
+    ignoreFile: 'i'
+    refreshFiles: 'r'
+    stashAllChanges: 's'
+    viewStashOptions: 'S'
+    toggleStagedAll: 'a'
+    viewResetOptions: 'D'
+    fetch: 'f'
+    toggleTreeView: '`'

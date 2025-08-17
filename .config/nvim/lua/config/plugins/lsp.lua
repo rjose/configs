@@ -1,24 +1,20 @@
 return {
   {
     "neovim/nvim-lspconfig",
+    enabled = false, -- Temporarily disable LSP
     dependencies = {
       "folke/lazydev.nvim",
       "b0o/schemastore.nvim",
-      ft = "lua",
-      opts = {
-        library = {
-          { path = "${3rd}/luv/library", words = {"vim%.uv" } },
-        },
-      },
     },
     config = function()
       local lspconfig = require("lspconfig")
       
-      -- Lua LSP
-      lspconfig.lua_ls.setup {}
-      
-      -- Get nvim-cmp capabilities
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+      -- Get nvim-cmp capabilities if available
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      local has_cmp, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+      if has_cmp then
+        capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+      end
       
       -- Common LSP keymaps function
       local function setup_keymaps(client, bufnr)
@@ -45,98 +41,42 @@ return {
         end
       end
       
-      -- TypeScript/JavaScript LSP (disabled for Deno projects)
-      lspconfig.ts_ls.setup({
+      -- Lua LSP
+      lspconfig.lua_ls.setup {
+        capabilities = capabilities,
         on_attach = setup_keymaps,
-        capabilities = capabilities,
-        root_dir = function(fname)
-          local root = lspconfig.util.root_pattern("deno.json", "deno.jsonc")(fname)
-          if root then
-            return nil -- Don't attach if Deno project
-          end
-          return lspconfig.util.root_pattern("package.json")(fname)
-        end,
-        single_file_support = false,
-      })
+      }
       
-      -- Deno LSP
-      lspconfig.denols.setup({
+      -- TypeScript LSP
+      lspconfig.tsserver.setup {
+        capabilities = capabilities,
         on_attach = setup_keymaps,
+      }
+      
+      -- Ruby LSP (using solargraph)
+      lspconfig.solargraph.setup {
         capabilities = capabilities,
-        root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
-        init_options = {
-          lint = true,
-          unstable = true,
-          suggest = {
-            imports = {
-              hosts = {
-                ["https://deno.land"] = true,
-                ["https://jsr.io"] = true,
-              }
-            }
-          }
-        }
-      })
-      
-      -- Ruby LSP (Solargraph - commented out)
-      -- lspconfig.solargraph.setup({
-      --   on_attach = setup_keymaps,
-      --   capabilities = vim.lsp.protocol.make_client_capabilities(),
-      --   settings = {
-      --     solargraph = {
-      --       diagnostics = true,
-      --       completion = true,
-      --       hover = true,
-      --       formatting = true,
-      --       symbols = true,
-      --       definitions = true,
-      --       rename = true,
-      --       references = true,
-      --     }
-      --   }
-      -- })
-      
-      -- Ruby LSP
-      lspconfig.ruby_lsp.setup({
         on_attach = setup_keymaps,
-        capabilities = capabilities,
-      })
-      
-      -- HTML LSP
-      lspconfig.html.setup({
-        on_attach = function(client, bufnr)
-          client.server_capabilities.documentFormattingProvider = false
-          setup_keymaps(client, bufnr)
-        end,
-        capabilities = capabilities,
-        filetypes = { "html", "erb", "eruby" },
-      })
-      
-      -- CSS LSP
-      lspconfig.cssls.setup({
-        on_attach = setup_keymaps,
-        capabilities = capabilities,
-      })
-      
-      -- Emmet LSP (HTML abbreviations)
-      lspconfig.emmet_ls.setup({
-        on_attach = setup_keymaps,
-        capabilities = capabilities,
-        filetypes = { "html", "css", "erb", "eruby" },
-      })
+      }
       
       -- JSON LSP
-      lspconfig.jsonls.setup({
-        on_attach = setup_keymaps,
-        capabilities = capabilities,
-        settings = {
-          json = {
-            schemas = require('schemastore').json.schemas(),
-            validate = { enable = true },
-            format = { enable = true },
-          },
+      local json_settings = {
+        json = {
+          validate = { enable = true },
         },
-      })
-    end
+      }
+      
+      -- Add schemastore schemas if available
+      local has_schemastore, schemastore = pcall(require, 'schemastore')
+      if has_schemastore then
+        json_settings.json.schemas = schemastore.json.schemas()
+      end
+      
+      lspconfig.jsonls.setup {
+        capabilities = capabilities,
+        on_attach = setup_keymaps,
+        settings = json_settings,
+      }
+    end,
   }
 }
