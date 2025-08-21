@@ -54,9 +54,6 @@ return {
       -- Load fzf extension
       require('telescope').load_extension('fzf')
       
-      -- Custom highlights for better selection visibility with Catppuccin
-      vim.api.nvim_set_hl(0, "TelescopeSelection", { bg = "#45475a", fg = "#cdd6f4", bold = true })
-      vim.api.nvim_set_hl(0, "TelescopeSelectionCaret", { bg = "#45475a", fg = "#f38ba8", bold = true })
 
       -- Key mappings
       local builtin = require('telescope.builtin')
@@ -71,6 +68,7 @@ return {
       vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
       vim.keymap.set('n', '<leader>fr', builtin.oldfiles, { desc = 'Telescope recent files' })
       vim.keymap.set('n', '<leader>fc', builtin.commands, { desc = 'Telescope commands' })
+      vim.keymap.set('n', '<leader>fs', builtin.lsp_document_symbols, { desc = 'Telescope document symbols' })
     end,
   },
 }

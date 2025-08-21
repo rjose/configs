@@ -11,6 +11,16 @@ return {
         y = 0.5
       }
     })
+    
+    -- Set darker background for ranger terminal windows
+    vim.api.nvim_create_autocmd("TermOpen", {
+      pattern = "*ranger*",
+      callback = function()
+        vim.api.nvim_set_hl(0, "RangerNormal", { bg = "#0f0f0f", fg = "#e0e0e0" })
+        vim.wo.winhighlight = "Normal:RangerNormal"
+      end,
+    })
+    
     vim.keymap.set("n", "<leader>ef", function()
       require("ranger-nvim").open(true)
     end, { desc = "Open ranger file manager" })

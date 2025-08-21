@@ -13,10 +13,10 @@ return {
     config = function()
       local cmp = require("cmp")
       local luasnip = require("luasnip")
-      
+
       -- Toggle autocomplete functionality
-      local autocomplete_enabled = false
-      
+      local autocomplete_enabled = true
+
       local function toggle_autocomplete()
         autocomplete_enabled = not autocomplete_enabled
         if autocomplete_enabled then
@@ -27,12 +27,12 @@ return {
           print("Autocomplete disabled")
         end
       end
-      
+
       -- Set up keybinding for toggle
       vim.keymap.set("n", "<leader>tc", toggle_autocomplete, { desc = "Toggle autocomplete" })
 
       cmp.setup({
-        enabled = false, -- Disable by default
+        enabled = true,
         snippet = {
           expand = function(args)
             luasnip.lsp_expand(args.body)

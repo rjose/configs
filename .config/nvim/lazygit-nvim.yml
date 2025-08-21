@@ -1,0 +1,114 @@
+# Force color output always
+forceColors: true
+colorMode: always
+
+gui:
+  theme:
+    lightTheme: true
+    activeBorderColor:
+      - "#059669"
+      - bold
+    inactiveBorderColor:
+      - "#6b7280"
+    optionsTextColor:
+      - "#374151"
+    selectedLineBgColor:
+      - blue
+    selectedRangeBgColor:
+      - blue
+    cherryPickedCommitBgColor:
+      - yellow
+    cherryPickedCommitFgColor:
+      - black
+    unstagedChangesColor:
+      - red
+    stagedChangesColor:
+      - green
+      - bold
+    defaultFgColor:
+      - default
+    # File status colors - targeting git status indicators
+    addedColor:
+      - green
+      - bold
+    modifiedColor:
+      - green  
+      - bold
+    deletedColor:
+      - green
+      - bold
+    renamedColor:
+      - green
+      - bold
+    untrackedColor:
+      - red
+    ignoredColor:
+      - "#6b7280"
+    # Target the status letters specifically
+    stagedColor:
+      - green
+      - bold
+  border: "rounded"
+  scrollHeight: 2
+  sidePanelWidth: 0.3333
+  expandFocusedSidePanel: false
+  mainPanelSplitMode: "flexible"
+  language: "auto"
+  timeFormat: "02 Jan 06"
+  shortTimeFormat: "15:04"
+  authorColors:
+    "*": "#000000"
+  branchColors:
+    "master": "#059669"
+    "main": "#059669"
+    "develop": "#0369a1"
+    "dev": "#0369a1"
+  commitLength:
+    show: true
+  mouseEvents: true
+  skipDiscardChangeWarning: false
+  skipStashWarning: false
+  showFileTree: true
+  showListFooter: true
+  showRandomTip: false
+  showBranchCommitHash: false
+  showBottomLine: true
+  showCommandLog: false
+  commandLogSize: 8
+  splitDiff: "auto"
+git:
+  paging:
+    colorArg: always
+    pager: delta --light --paging=never --color=always --force-color
+  commit:
+    signOff: false
+  merging:
+    manualCommit: false
+    args: ""
+  log:
+    order: "topo-order"
+    showGraph: "when-maximised"
+    showWholeGraph: false
+  skipHookPrefix: WIP
+  autoFetch: true
+  autoRefresh: true
+  branchLogCmd: "git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium {{branchName}} --"
+  overrideGpg: false
+  disableForcePushing: false
+  parseEmoji: false
+  diffContextSize: 3
+  allBranchesLogCmds:
+    - git log --graph --all --color=always --abbrev-commit --decorate --date=relative --pretty=medium
+  # Force color output in all git commands
+  forceColor: true
+refresher:
+  refreshInterval: 10
+  fetchInterval: 60
+update:
+  method: prompt
+  days: 14
+confirmOnQuit: false
+quitOnTopLevelReturn: false
+disableStartupPopups: false
+notARepository: "prompt"
+promptToReturnFromSubprocess: true

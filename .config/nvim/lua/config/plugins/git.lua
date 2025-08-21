@@ -105,5 +105,25 @@ return {
         keys = {
             { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
         },
+        config = function()
+            -- Use separate config file for nvim lazygit with better styling
+            vim.env.LAZYGIT_CONFIG_FILE = vim.fn.expand("~/.config/nvim/lazygit-nvim.yml")
+            
+            -- Force color support - override any terminal limitations
+            vim.env.TERM = "xterm-256color"
+            vim.env.COLORTERM = "truecolor"
+            vim.env.FORCE_COLOR = "3"
+            vim.env.CLICOLOR = "1"
+            vim.env.CLICOLOR_FORCE = "1"
+            
+            -- LazyGit specific color forcing
+            vim.env.LAZYGIT_FORCE_COLORS = "1"
+            vim.env.NO_COLOR = ""  -- Ensure NO_COLOR is not set
+            
+            -- Terminal capabilities
+            vim.g.lazygit_floating_window_winblend = 0
+            vim.g.lazygit_floating_window_scaling_factor = 0.9
+            vim.g.lazygit_use_neovim_remote = 1
+        end,
     },
 }

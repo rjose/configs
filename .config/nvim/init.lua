@@ -71,67 +71,34 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Customize diff colors for git hunks and fold highlighting
-vim.api.nvim_create_autocmd("ColorScheme", {
-  callback = function()
-    vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#2d4a2c", fg = "#a6e3a1" })
-    vim.api.nvim_set_hl(0, "DiffChange", { bg = "#3a3a2e", fg = "#f9e2af" })
-    vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#4a2d2d", fg = "#f38ba8" })
-    vim.api.nvim_set_hl(0, "DiffText", { bg = "#4a4a2e", fg = "#f9e2af" })
 
-    -- Better fold highlighting
-    vim.api.nvim_set_hl(0, "Folded", { bg = "#1e1e2e", fg = "#89b4fa", italic = true })
-    vim.api.nvim_set_hl(0, "FoldColumn", { bg = "NONE", fg = "#6c7086" })
+-- Dark theme immediate applications (disabled for light mode)
+-- vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#2d4a2c", fg = "#a6e3a1" })
+-- vim.api.nvim_set_hl(0, "DiffChange", { bg = "#3a3a2e", fg = "#f9e2af" })
+-- vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#4a2d2d", fg = "#f38ba8" })
+-- vim.api.nvim_set_hl(0, "DiffText", { bg = "#4a4a2e", fg = "#f9e2af" })
+-- vim.api.nvim_set_hl(0, "Folded", { bg = "#1e1e2e", fg = "#89b4fa", italic = true })
+-- vim.api.nvim_set_hl(0, "FoldColumn", { bg = "NONE", fg = "#6c7086" })
+-- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#313244" })
 
-    -- Subtle current line highlight
-    vim.api.nvim_set_hl(0, "CursorLine", { bg = "#262638" })
-
-    -- Make window borders more visible
-    vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#89b4fa", bold = true })
-    vim.api.nvim_set_hl(0, "VertSplit", { fg = "#89b4fa", bold = true })
-
-    -- Make statuslines more visible
-    vim.api.nvim_set_hl(0, "MiniStatuslineInactive", { bg = "#45475a", fg = "#cdd6f4" })
-    -- Try setting all mini.statusline sections with background
-    vim.api.nvim_set_hl(0, "MiniStatuslineDevinfo", { bg = "#89b4fa", fg = "#1e1e2e" })
-    -- vim.api.nvim_set_hl(0, "MiniStatuslineFilename", { bg = "NONE", fg = "NONE" })
-    vim.api.nvim_set_hl(0, "MiniStatuslineFileinfo", { bg = "#89b4fa", fg = "#1e1e2e" })
-    vim.api.nvim_set_hl(0, "StatusLine", { bg = "#89b4fa", fg = "#1e1e2e" })
-
-    -- Harmonizing current line highlight
-    vim.api.nvim_set_hl(0, "CursorLine", { bg = "#3a3a2e" })
-  end,
-})
-
--- Apply immediately
-vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#2d4a2c", fg = "#a6e3a1" })
-vim.api.nvim_set_hl(0, "DiffChange", { bg = "#3a3a2e", fg = "#f9e2af" })
-vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#4a2d2d", fg = "#f38ba8" })
-vim.api.nvim_set_hl(0, "DiffText", { bg = "#4a4a2e", fg = "#f9e2af" })
-
--- Apply fold highlighting immediately
-vim.api.nvim_set_hl(0, "Folded", { bg = "#1e1e2e", fg = "#89b4fa", italic = true })
-vim.api.nvim_set_hl(0, "FoldColumn", { bg = "NONE", fg = "#6c7086" })
-
--- Apply current line highlight immediately
-vim.api.nvim_set_hl(0, "CursorLine", { bg = "#313244" })
-
--- Tmux focus-responsive background dimming
-vim.api.nvim_create_augroup("TmuxFocusBackground", { clear = true })
-vim.api.nvim_create_autocmd({ "FocusGained", "VimEnter" }, {
-  group = "TmuxFocusBackground",
-  callback = function()
-    -- Active: use dark charcoal background (matches your preferred color)
-    vim.api.nvim_set_hl(0, "Normal", { bg = "#1a1a1a" })
-  end,
-})
-vim.api.nvim_create_autocmd({ "FocusLost" }, {
-  group = "TmuxFocusBackground",
-  callback = function()
-    -- Inactive: use dimmed background (matches tmux inactive pane)
-    vim.api.nvim_set_hl(0, "Normal", { bg = "#303030" })
-  end,
-})
+-- Tmux focus-responsive background dimming (disabled for light mode)
+-- vim.api.nvim_create_augroup("TmuxFocusBackground", { clear = true })
+-- vim.api.nvim_create_autocmd({ "FocusGained", "VimEnter" }, {
+--   group = "TmuxFocusBackground",
+--   callback = function()
+--     -- Active: use dark charcoal background with bright foreground
+--     vim.api.nvim_set_hl(0, "Normal", { bg = "#1a1a1a", fg = "#a6adc8" })
+--     vim.api.nvim_set_hl(0, "NormalNC", { fg = "#6c7086" })
+--   end,
+-- })
+-- vim.api.nvim_create_autocmd({ "FocusLost" }, {
+--   group = "TmuxFocusBackground",
+--   callback = function()
+--     -- Inactive: use dimmed background with dimmed foreground
+--     vim.api.nvim_set_hl(0, "Normal", { bg = "#303030", fg = "#6c7086" })
+--     vim.api.nvim_set_hl(0, "NormalNC", { fg = "#6c7086" })
+--   end,
+-- })
 
 -- Only show cursor line in active window
 vim.api.nvim_create_augroup("CursorLineOnlyInActiveWindow", { clear = true })
@@ -148,17 +115,17 @@ vim.api.nvim_create_autocmd({ "WinLeave" }, {
   end,
 })
 
--- Apply window border highlighting immediately
-vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#89b4fa", bold = true })
-vim.api.nvim_set_hl(0, "VertSplit", { fg = "#89b4fa", bold = true })
-
--- Apply statusline highlighting immediately
-vim.api.nvim_set_hl(0, "MiniStatuslineInactive", { bg = "#45475a", fg = "#cdd6f4" })
-vim.api.nvim_set_hl(0, "MiniStatuslineDevinfo", { bg = "#89b4fa", fg = "#1e1e2e" })
-vim.api.nvim_set_hl(0, "MiniStatuslineFilename", { bg = "#89b4fa", fg = "#1e1e2e" })
-vim.api.nvim_set_hl(0, "MiniStatuslineFileinfo", { bg = "#89b4fa", fg = "#1e1e2e" })
-vim.api.nvim_set_hl(0, "StatusLine", { bg = "#89b4fa", fg = "#1e1e2e" })
-vim.api.nvim_set_hl(0, "CursorLine", { bg = "#3a3a2e" })
+-- Dark theme immediate applications (disabled for light mode)
+-- vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#89b4fa", bold = true })
+-- vim.api.nvim_set_hl(0, "VertSplit", { fg = "#89b4fa", bold = true })
+-- vim.api.nvim_set_hl(0, "MiniStatuslineInactive", { bg = "#45475a", fg = "#cdd6f4" })
+-- vim.api.nvim_set_hl(0, "MiniStatuslineDevinfo", { bg = "#89b4fa", fg = "#1e1e2e" })
+-- vim.api.nvim_set_hl(0, "MiniStatuslineFilename", { bg = "#89b4fa", fg = "#1e1e2e" })
+-- vim.api.nvim_set_hl(0, "MiniStatuslineFileinfo", { bg = "#89b4fa", fg = "#1e1e2e" })
+-- vim.api.nvim_set_hl(0, "StatusLine", { bg = "#89b4fa", fg = "#1e1e2e" })
+-- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#3a3a2e" })
+-- vim.api.nvim_set_hl(0, "Normal", { fg = "#a6adc8" })
+-- vim.api.nvim_set_hl(0, "NormalNC", { fg = "#6c7086" })
 
 -- Custom fold text function for better fold display
 vim.opt.fillchars = {
@@ -195,7 +162,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Save file and go to normal mode
-vim.keymap.set({'n', 'i', 'v'}, '<C-s>', '<Esc>:w<CR>', { desc = 'Save file and go to normal mode' })
+vim.keymap.set({ 'n', 'i', 'v' }, '<C-s>', '<Esc>:w<CR>', { desc = 'Save file and go to normal mode' })
 
 -- Scratch buffer command
 vim.api.nvim_create_user_command('Scratch', function()
@@ -204,3 +171,26 @@ vim.api.nvim_create_user_command('Scratch', function()
   vim.bo.bufhidden = 'wipe'
   vim.bo.swapfile = false
 end, { desc = 'Create a scratch buffer that can be closed without saving' })
+
+-- Create custom highlight groups for bright text
+vim.api.nvim_set_hl(0, "BrightText", { fg = "#e8e8e8" })
+
+-- Treat Forthic files as plain text with bright color
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile", "BufEnter" }, {
+  pattern = "*.forthic",
+  callback = function()
+    vim.bo.filetype = "text"
+    vim.cmd("syntax off")
+    vim.cmd("highlight! link Normal BrightText")
+  end,
+})
+
+-- Make text files brighter
+vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
+  pattern = "text",
+  callback = function()
+    vim.cmd("highlight! link Normal BrightText")
+  end,
+})
+
+vim.keymap.set('n', '<leader>dd', '<cmd>lua vim.diagnostic.setloclist()<CR>', { desc = 'Document diagnostics' })
